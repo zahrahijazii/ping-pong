@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddle import Paddle
 from ball import Ball
+from scoreboard import Scoreboard
 import time
 
 
@@ -29,10 +30,13 @@ screen.onkey(l_paddle.go_down, "s")
 #set up the ball:
 ball = Ball()
 
+#set up the scoreboard:
+score = Scoreboard()
+
 game_is_on = True
 
 while game_is_on:
-    time.sleep(0.1)
+    time.sleep(ball.move_speed)
     screen.update()
     ball.move()
     #Detect collision with wall:
@@ -44,8 +48,14 @@ while game_is_on:
         ball.bounce_x()
 
     #Detect when paddle misses:
-    if ball.xcor() > 380 or ball.xcor() < -380:
+    if ball.xcor() > 380:
         ball.restart()
+        score.l_point()
+    
+    if ball.xcor() < -380:
+        ball.restart()
+        score.r_point()
+
 
     
  
